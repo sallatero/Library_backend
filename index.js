@@ -5,6 +5,7 @@ const { typeDefs } = require('./graphql/schema')
 const resolvers = require('./graphql/resolvers')
 const jwt = require('jsonwebtoken')
 const express = require('express')
+const http = require('http')
 
 const JWT_SECRET = 'SECRET_KEY'
 
@@ -38,15 +39,16 @@ const server = new ApolloServer({
   }
 })
 
-const app = express()
-
 const PORT = process.env.PORT || 4000
 
-server.applyMiddleware({
-  app
-})
+const app = express()
 
-app.listen(PORT, ({ url, subscriptionsUrl }) => {
-  console.log(`Server ready at ${url}`)
-  console.log(`Subscriptions ready at ${subscriptionsUrl}`)
+server.applyMiddleware({ app })
+
+const httpServer = http.createServer(app)
+server.installSubscriptionHandlers(httpServer)
+
+httpServer.listen(PORT, () => {
+  console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`)
+  console.log(`Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`)
 })
