@@ -5,7 +5,7 @@ const { typeDefs } = require('./graphql/schema')
 const resolvers = require('./graphql/resolvers')
 const jwt = require('jsonwebtoken')
 const express = require('express')
-const cors = require('cors')
+const path = require('path')
 const http = require('http')
 
 const JWT_SECRET = 'SECRET_KEY'
@@ -43,9 +43,15 @@ const server = new ApolloServer({
 const PORT = process.env.PORT || 4000
 
 const app = express()
-app.use('/', express.static('build/index.html'))
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build/'))
+}
 //server.applyMiddleware({ path: 'build/index.html', app })
 //server.applyMiddleware({ path: '/api', app })
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+})
 
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
