@@ -38,6 +38,7 @@ const server = new ApolloServer({
       return { currentUser }
     }
   }
+  introspection: true
 })
 
 const PORT = process.env.PORT || 4000
@@ -49,11 +50,13 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/build/')))
 }
 
-//server.applyMiddleware({ path: 'build/index.html', app })
+server.applyMiddleware({ app })
 //server.applyMiddleware({ path: '/api', app })
+/*
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
 })
+*/
 
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
