@@ -45,8 +45,10 @@ const PORT = process.env.PORT || 4000
 const app = express()
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('build/'))
+  app.use(express.static(path.resolve(__dirname, 'build', 'index.html')))
+  //app.use(express.static('build/'))
 }
+
 //server.applyMiddleware({ path: 'build/index.html', app })
 //server.applyMiddleware({ path: '/api', app })
 app.get('/', (req, res) => {
