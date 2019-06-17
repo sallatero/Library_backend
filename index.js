@@ -43,7 +43,7 @@ const PORT = process.env.PORT || 4000
 
 const app = express()
 
-server.applyMiddleware({ app })
+server.applyMiddleware({ path: '/build', app })
 
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
