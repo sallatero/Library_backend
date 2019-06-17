@@ -1,9 +1,10 @@
-const { ApolloServer } = require('apollo-server')
+const { ApolloServer } = require('apollo-server-express')
 const mongoose = require('mongoose')
 const User = require('./models/user')
 const { typeDefs } = require('./graphql/schema')
 const resolvers = require('./graphql/resolvers')
 const jwt = require('jsonwebtoken')
+const express = require('express')
 
 const JWT_SECRET = 'SECRET_KEY'
 
@@ -37,9 +38,15 @@ const server = new ApolloServer({
   }
 })
 
+const app = express()
+
 const PORT = process.env.PORT || 4000
 
-server.listen(PORT).then(({ url, subscriptionsUrl }) => {
+server.applyMiddleware({
+  app
+})
+
+app.listen(PORT, ({ url, subscriptionsUrl }) => {
   console.log(`Server ready at ${url}`)
   console.log(`Subscriptions ready at ${subscriptionsUrl}`)
 })
