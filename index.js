@@ -43,9 +43,9 @@ const server = new ApolloServer({
 const PORT = process.env.PORT || 4000
 
 const app = express()
-app.use('/', express.static('build'))
+app.use('/', express.static('build/index.html'))
 //server.applyMiddleware({ path: 'build/index.html', app })
-server.applyMiddleware({ path: '/api', app })
+//server.applyMiddleware({ path: '/api', app })
 
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
