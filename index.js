@@ -5,6 +5,7 @@ const { typeDefs } = require('./graphql/schema')
 const resolvers = require('./graphql/resolvers')
 const jwt = require('jsonwebtoken')
 const express = require('express')
+const cors = require('cors')
 const http = require('http')
 
 const JWT_SECRET = 'SECRET_KEY'
@@ -43,7 +44,7 @@ const PORT = process.env.PORT || 4000
 
 const app = express()
 
-server.applyMiddleware({ path: '/build', app })
+server.applyMiddleware({ path: 'build/index.html', app })
 
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
