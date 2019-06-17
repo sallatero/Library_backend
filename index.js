@@ -45,8 +45,8 @@ const PORT = process.env.PORT || 4000
 const app = express()
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.resolve(__dirname, 'build', 'index.html')))
-  //app.use(express.static('build/'))
+  //app.use(express.static(path.resolve(__dirname, 'build', 'index.html')))
+  app.use(express.static(path.join(__dirname, '/build/')))
 }
 
 //server.applyMiddleware({ path: 'build/index.html', app })
