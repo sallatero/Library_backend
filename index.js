@@ -38,8 +38,9 @@ const server = new ApolloServer({
       return { currentUser }
     }
   }
-  introspection: true
+  //introspection: true
 })
+
 
 const PORT = process.env.PORT || 4000
 
