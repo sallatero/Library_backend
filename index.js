@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/build/')))
 }
 
-server.applyMiddleware({ app })
+server.applyMiddleware({ app, path: '/graphql' })
 //server.applyMiddleware({ path: '/api', app })
 /*
 app.get('/', (req, res) => {
